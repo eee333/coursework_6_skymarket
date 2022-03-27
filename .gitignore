@@ -130,3 +130,5 @@ dmypy.json
 .DS_Store
 .idea/
 ./django_static
+doc_32_1.md
+.env
