@@ -2,6 +2,7 @@ from rest_framework import pagination, viewsets
 
 from ads.models import Ad, Comment
 from ads.serializers import AdSerializer, AdDetailSerializer, CommentSerializer
+from rest_framework.decorators import action
 
 
 class AdPagination(pagination.PageNumberPagination):
@@ -21,6 +22,15 @@ class AdViewSet(viewsets.ModelViewSet):
             return AdDetailSerializer
         return AdSerializer
 
+    def get_queryset(self):
+        if self.action == 'me':
+            return Ad.objects.filter(author=self.request.user).all()
+        return Ad.objects.all()
+
+    @action(detail=False, methods=['get'])
+    def me(self, request, *args, **kwargs):
+        return super().list(self, request, *args, **kwargs)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
 
@@ -32,7 +42,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         the ad.
         """
         ad = self.kwargs['pk']
-        return Comment.objects.filter(ad=ad)
+        return Comment.objects.filter(ad=ad).all()
 
     def perform_create(self, serializer):
         ad = self.kwargs['pk']
