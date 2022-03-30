@@ -22,7 +22,9 @@ class AdSerializer(serializers.ModelSerializer):
 
 class AdDetailSerializer(serializers.ModelSerializer):
 
-    author = UserSerializer()
+    phone = serializers.SlugRelatedField(read_only=True, source='author', slug_field='phone')
+    author_first_name = serializers.SlugRelatedField(read_only=True, source='author', slug_field='first_name')
+    author_last_name = serializers.SlugRelatedField(read_only=True, source='author', slug_field='last_name')
 
     class Meta:
         model = Ad
