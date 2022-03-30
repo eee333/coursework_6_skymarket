@@ -45,6 +45,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Comment.objects.filter(ad=ad).all()
 
     def perform_create(self, serializer):
-        ad = self.kwargs['pk']
+        ad = self.kwargs['ad_pk']
         serializer.save(author=self.request.user)
         serializer.save(ad_id=ad)
