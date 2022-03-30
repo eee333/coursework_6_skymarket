@@ -12,5 +12,5 @@ comment_router.register("comments", CommentViewSet, basename="comments")
 
 urlpatterns = [
     path("", include(ad_router.urls)),
-    path("<int:pk>/", include(comment_router.urls)),
+    path("<int:ad_pk>/", include(comment_router.urls)),
 ]

@@ -41,7 +41,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         This view should return a list of all the comments for
         the ad.
         """
-        ad = self.kwargs['pk']
+        ad = self.kwargs['ad_pk']
         return Comment.objects.filter(ad=ad).all()
 
     def perform_create(self, serializer):
