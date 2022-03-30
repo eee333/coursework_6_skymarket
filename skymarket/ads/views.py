@@ -4,6 +4,8 @@ from ads.models import Ad, Comment
 from ads.serializers import AdSerializer, AdDetailSerializer, CommentSerializer
 from rest_framework.decorators import action
 
+from ads.permissions import ListOrIsAuthenticated
+
 
 class AdPagination(pagination.PageNumberPagination):
     pass
@@ -12,7 +14,7 @@ class AdPagination(pagination.PageNumberPagination):
 # TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
-    # permission_classes = [ReadOnlyOrAdminPermissionList]
+    permission_classes = [ListOrIsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
