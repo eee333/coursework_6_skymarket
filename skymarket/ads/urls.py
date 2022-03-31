@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-# TODO настройка роутов для модели
+# настройка роутов для модели
 from rest_framework.routers import SimpleRouter
 
 from ads.views import AdViewSet, CommentViewSet

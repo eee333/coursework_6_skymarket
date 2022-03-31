@@ -4,17 +4,19 @@ from ads.models import Ad, Comment
 from ads.serializers import AdSerializer, AdDetailSerializer, CommentSerializer
 from rest_framework.decorators import action
 
-from ads.permissions import ListOrIsAuthenticated
+from ads.permissions import ReadOrCreatePermission, OwnerOrAdminPermissionOne
+from rest_framework.permissions import IsAuthenticated
 
 
-class AdPagination(pagination.PageNumberPagination):
-    pass
-
-
-# TODO view функции. Предлагаем Вам следующую структуру - но Вы всегда можете использовать свою
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
-    permission_classes = [ListOrIsAuthenticated]
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve', 'create', 'me']:
+            self.permission_classes = [ReadOrCreatePermission]
+        else:
+            self.permission_classes = [OwnerOrAdminPermissionOne]
+        return super(self.__class__, self).get_permissions()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -37,6 +39,13 @@ class AdViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
 
     serializer_class = CommentSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve', 'create']:
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [OwnerOrAdminPermissionOne]
+        return super(self.__class__, self).get_permissions()
 
     def get_queryset(self):
         """

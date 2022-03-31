@@ -1,9 +1,7 @@
 from rest_framework import serializers
 
 
-# TODO Сериалайзеры. Предлагаем Вам такую структуру, однако вы вправе использовать свою
 from ads.models import Ad, Comment
-from users.serializers import UserSerializer
 
 
 class CommentSerializer(serializers.ModelSerializer):
