@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import pagination, viewsets
 
 from ads.models import Ad, Comment
@@ -7,9 +8,13 @@ from rest_framework.decorators import action
 from ads.permissions import ReadOrCreatePermission, OwnerOrAdminPermissionOne
 from rest_framework.permissions import IsAuthenticated
 
+from ads.filter import AdFilter
+
 
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = AdFilter
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve', 'create', 'me']:

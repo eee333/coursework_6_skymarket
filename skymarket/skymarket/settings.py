@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "redoc",
     "drf_spectacular",
     "djoser",
+    'django_filters',
 ]
 
 
