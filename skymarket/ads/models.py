@@ -6,10 +6,32 @@ from users.models import User
 
 class Ad(models.Model):
 
-    title = models.CharField(max_length=50, validators=[MinLengthValidator(10)])
-    price = models.DecimalField(max_digits=12, decimal_places=0, validators=[MinValueValidator(0)])
-    description = models.TextField(max_length=1000, null=True)
-    image = models.ImageField(upload_to='media/', null=True)
+    title = models.CharField(
+        max_length=50,
+        validators=[MinLengthValidator(10)],
+        verbose_name="Название товара",
+        help_text="Краткое название товара",
+    )
+    price = models.DecimalField(
+        max_digits=12,
+        decimal_places=0,
+        validators=[MinValueValidator(0)],
+        verbose_name="Цена товара",
+        help_text="Цена товара (только цифры)",
+    )
+    description = models.TextField(
+        max_length=1000,
+        null=True,
+        verbose_name="Описание товара",
+        help_text="Подробное описание товара товара",
+    )
+    image = models.ImageField(
+        upload_to="media/",
+        null=True,
+        blank=True,
+        verbose_name="Фото",
+        help_text="Вставьте фото товара",
+    )
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
