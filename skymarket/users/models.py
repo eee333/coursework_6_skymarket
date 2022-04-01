@@ -23,7 +23,7 @@ class User(AbstractBaseUser):
 
     # эта константа содержит список с полями,
     # которые необходимо заполнить при создании пользователя
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', "role"]
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 
     email = models.EmailField(unique=True, max_length=100)
     role = models.CharField(max_length=5, choices=ROLES, default="user")

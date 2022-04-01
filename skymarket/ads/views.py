@@ -11,10 +11,15 @@ from rest_framework.permissions import IsAuthenticated
 from ads.filter import AdFilter
 
 
+class AdPagination(pagination.PageNumberPagination):
+    page_size = 4
+
+
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all()
     filter_backends = (DjangoFilterBackend,)
     filterset_class = AdFilter
+    pagination_class = AdPagination
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve', 'create', 'me']:
